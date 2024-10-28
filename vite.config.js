@@ -3,17 +3,20 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import fs from 'fs-extra';
 
-// Copy _redirects file after build
+// Copy _redirects file after build (useful for Netlify)
 const copyRedirects = () => {
   return {
     name: 'copy-redirects',
     closeBundle: async () => {
-      await fs.copy('public/_redirects', 'dist/_redirects');
+      if (fs.existsSync('public/_redirects')) {
+        await fs.copy('public/_redirects', 'dist/_redirects');
+      }
     }
   }
 }
 
 export default defineConfig({
+  base: './',  // Ensures relative paths for assets
   plugins: [react(), copyRedirects()],
   resolve: {
     alias: {
