@@ -16,7 +16,6 @@ const copyRedirects = () => {
 }
 
 export default defineConfig({
-  base: './',  // Ensures relative paths for assets
   plugins: [react(), copyRedirects()],
   resolve: {
     alias: {
